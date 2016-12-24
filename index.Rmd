@@ -1,10 +1,3 @@
----
-title: "Pass Ratio"
-author: "Suraj Chandrasekhar"
-date: "December 23, 2016"
-output: html_document
----
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dplyr)
 library(plotly)
