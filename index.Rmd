@@ -1,0 +1,45 @@
+---
+title: "Pass Ratio"
+author: "Suraj Chandrasekhar"
+date: "December 23, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dplyr)
+library(plotly)
+library(knitr)
+dataset <- read.csv("./data/2017playerdata.csv")
+source("./scripts/graph1.R")
+source("./scripts/graph2.R")
+min <- dataset %>% filter(PSR == min(PSR))
+max <- dataset %>% filter(PSR == max(PSR))
+```
+
+## Pass Ratio
+### Stats updated as of Decembder, 22nd, 2016
+
+People that look at NBA Stats consider James Harden and Russell Westbrook elite passers because of their high assist totals. However, when watching them, it seems like they hold the ball most of the possession and their assists are created because they draw double teams when they drive and make an easy pass to the open guy in the corner, and their teammate gets an open catch and shoot opportunity. Below is a graph depicting the assist per game to a player's usage rate, or the number of possessions a player uses per 40 minutes, of the top 25 NBA players in APG in the 2016-17 season.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+  return(BuildGraph1())
+```
+
+Looking at the graph above, there is a positive correlation between assists and a players usage rate. I have create a statistic called Passer Rating (PSR), which is going to look at how willing of a smart passer a player makes. I created this Statistic with the following formula:
+
+
+**PSR = (Total Passes + Potential Assists + Secondary Assists) / (Total FGA + 0.5 x Total FTA + Total Turnovers)**
+
+To get these values, I used [NBA.com Player Tracking Stats](http://stats.nba.com/players/passing/#!?sort=PASSES_MADE&dir=1&Season=2016-17&SeasonType=Regular%20Season&PerMode=Totals) and [Basketball Reference](http://www.basketball-reference.com/leagues/NBA_2017.html). 
+I used the amount of total passes a player makes and added both potential and secondary assists to highlight the quality of passes a player makes as it would result in a potential scoring play. I divided this value by the number of possessions that would result in the player scoring the ball or turning the ball over, whether from dribbling the ball or making a bad pass. I multiplied the FT attempts by 0.5 because the average free throw trip consists of 2 free throws, and I am looking at the number of possessions that a player ends up going to thre free throw line.
+
+With this statistic in hand, here is a graph showing a players PSR vs a Players Assists per game.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+  return(BuildGraph2())
+```
+The graph shows that among the top 25 in the APG category, there is a very weak negative correlation between a Players APG and their PSR. Russell Westbrook, who is 2nd in the NBA with 10.8 Assists Per Game has a PSR of 2.11, which is the smallest among the dataset, while Ricky Rubio, who averages 6.9 Assists Per game, has a PSR of 8.58. These results show that Russell Westbrook focuses more on finishing possessions himself while Ricky Rubio keeps the ball moving within the team system, and that Assists Per Game is more of a stat padding statistic for players with the ball in their hands a majority of the time rather than shows who the most unselfish players in the NBA are.
+
+
+
